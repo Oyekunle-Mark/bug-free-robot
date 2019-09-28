@@ -20,11 +20,23 @@ const editQuote = (id, quote, quotes = data) => {
   return data.find(qt => qt.id === id);
 };
 
+const deletQuote = (id, quotes = data) => {
+  const lengthBeforeOperation = quotes.length;
+
+  data = quotes.filter(qt => qt.id !== id);
+
+  return { ok: data.length < lengthBeforeOperation };
+};
+
 const typeDefs = gql`
   type Quote {
     id: ID!
     phrase: String!
     quotee: String!
+  }
+
+  type DeleteQuoteResponse {
+    ok: Boolean!
   }
 
   type Query {
@@ -34,6 +46,7 @@ const typeDefs = gql`
   type Mutation {
     addQuote(phrase: String!, quotee: String!): Quote!
     editQuote(id: ID!, phrase: String, quotee: String): Quote!
+    deletQuote(id: ID!): DeleteQuoteResponse!
   }
 `;
 
@@ -47,6 +60,7 @@ const resolvers = {
       const { id, phrase, quotee } = quote;
       return editQuote(id, { phrase, quotee });
     },
+    deletQuote: (_, { id }) => deletQuote(id),
   },
 };
 
