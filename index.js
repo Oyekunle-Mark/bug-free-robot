@@ -1,34 +1,12 @@
 const { ApolloServer, gql } = require('apollo-server');
-const { v4 } = require('uuid');
 
-let data = require('./data');
-
-const quoteById = (id, quotes = data) => quotes.find(qt => qt.id === id);
-
-const addQuote = (quote, quotes = data) => {
-  const newQuote = { id: v4(), ...quote };
-
-  data = [...quotes, newQuote];
-
-  return newQuote;
-};
-
-const editQuote = (id, quote, quotes = data) => {
-  data = quotes.map(qt => {
-    if (qt.id === id) return { ...qt, ...quote };
-    return qt;
-  });
-
-  return quoteById(id);
-};
-
-const deletQuote = (id, quotes = data) => {
-  const lengthBeforeOperation = quotes.length;
-
-  data = quotes.filter(qt => qt.id !== id);
-
-  return { ok: data.length < lengthBeforeOperation };
-};
+const {
+  getQuotes,
+  quoteById,
+  addQuote,
+  editQuote,
+  deleteQuote,
+} = require('./data/storeHelpers');
 
 const typeDefs = gql`
   type Quote {
@@ -55,7 +33,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    quotes: () => data,
+    quotes: () => getQuotes(),
     quoteById: (_, { id }) => quoteById(id),
   },
   Mutation: {
@@ -64,7 +42,7 @@ const resolvers = {
       const { id, phrase, quotee } = quote;
       return editQuote(id, { phrase, quotee });
     },
-    deletQuote: (_, { id }) => deletQuote(id),
+    deletQuote: (_, { id }) => deleteQuote(id),
   },
 };
 
