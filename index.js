@@ -1,11 +1,13 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { v4 } = require('uuid');
 
+const data = require('./data');
+
 const typeDefs = gql`
   type Quote {
     id: ID!
     phrase: String!
-    speaker: String!
+    quotee: String!
   }
 
   type Query {
@@ -15,7 +17,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    quotes: () => [{ id: v4(), phrase: 'hello there', speaker: 'devs' }],
+    quotes: () => data,
   },
 };
 
