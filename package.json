@@ -1,0 +1,34 @@
+{
+  "name": "bug-free-robot",
+  "version": "1.0.0",
+  "description": "A CRUD app in node.js and GraphQL",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oyekunle-Mark/bug-free-robot.git"
+  },
+  "keywords": [
+    "graphql"
+  ],
+  "author": "oyekunle oloyede",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Oyekunle-Mark/bug-free-robot/issues"
+  },
+  "homepage": "https://github.com/Oyekunle-Mark/bug-free-robot#readme",
+  "devDependencies": {
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.2"
+  },
+  "dependencies": {
+    "apollo-server": "^2.9.4",
+    "graphql": "^14.5.8",
+    "uuid": "^3.3.3"
+  }
+}
