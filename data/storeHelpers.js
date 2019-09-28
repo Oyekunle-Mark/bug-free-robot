@@ -3,7 +3,15 @@ let data = require('./store');
 
 const getQuotes = () => data;
 
-const quoteById = (id, quotes = data) => quotes.find(qt => qt.id === id);
+const quoteById = (id, quotes = data) => {
+  const quote = quotes.find(qt => qt.id === id);
+
+  if (!quote) {
+    throw new Error("Quote doesn't exist");
+  }
+
+  return quote;
+};
 
 const addQuote = (quote, quotes = data) => {
   const newQuote = { id: v4(), ...quote };
