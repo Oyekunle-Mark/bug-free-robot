@@ -11,6 +11,15 @@ const addQuote = (quote, quotes = data) => {
   return newQuote;
 };
 
+const editQuote = (id, quote, quotes = data) => {
+  data = quotes.map(qt => {
+    if (qt.id === id) return { ...qt, ...quote };
+    return qt;
+  });
+
+  return data.find(qt => qt.id === id);
+};
+
 const typeDefs = gql`
   type Quote {
     id: ID!
@@ -19,11 +28,12 @@ const typeDefs = gql`
   }
 
   type Query {
-    quotes: [Quote]
+    quotes: [Quote]!
   }
 
   type Mutation {
     addQuote(phrase: String!, quotee: String!): Quote!
+    editQuote(id: ID!, phrase: String, quotee: String): Quote!
   }
 `;
 
@@ -33,6 +43,10 @@ const resolvers = {
   },
   Mutation: {
     addQuote: (_, quote) => addQuote(quote),
+    editQuote: (_, quote) => {
+      const { id, phrase, quotee } = quote;
+      return editQuote(id, { phrase, quotee });
+    },
   },
 };
 
