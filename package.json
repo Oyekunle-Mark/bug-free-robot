@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Oyekunle-Mark/bug-free-robot/issues"
   },
-  "homepage": "https://github.com/Oyekunle-Mark/bug-free-robot#readme"
+  "homepage": "https://github.com/Oyekunle-Mark/bug-free-robot#readme",
+  "devDependencies": {
+    "eslint": "^6.4.0"
+  }
 }
