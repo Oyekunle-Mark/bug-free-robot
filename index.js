@@ -3,6 +3,8 @@ const { v4 } = require('uuid');
 
 let data = require('./data');
 
+const quoteById = (id, quotes = data) => quotes.find(qt => qt.id === id);
+
 const addQuote = (quote, quotes = data) => {
   const newQuote = { id: v4(), ...quote };
 
@@ -17,7 +19,7 @@ const editQuote = (id, quote, quotes = data) => {
     return qt;
   });
 
-  return data.find(qt => qt.id === id);
+  return quoteById(id);
 };
 
 const deletQuote = (id, quotes = data) => {
@@ -41,6 +43,7 @@ const typeDefs = gql`
 
   type Query {
     quotes: [Quote]!
+    quoteById(id: ID!): Quote!
   }
 
   type Mutation {
@@ -53,6 +56,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     quotes: () => data,
+    quoteById: (_, { id }) => quoteById(id),
   },
   Mutation: {
     addQuote: (_, quote) => addQuote(quote),
