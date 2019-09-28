@@ -1,7 +1,15 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { v4 } = require('uuid');
 
-const data = require('./data');
+let data = require('./data');
+
+const addQuote = (quote, quotes = data) => {
+  const newQuote = { id: v4(), ...quote };
+
+  data = [...quotes, newQuote];
+
+  return newQuote;
+};
 
 const typeDefs = gql`
   type Quote {
@@ -13,11 +21,18 @@ const typeDefs = gql`
   type Query {
     quotes: [Quote]
   }
+
+  type Mutation {
+    addQuote(phrase: String!, quotee: String!): Quote!
+  }
 `;
 
 const resolvers = {
   Query: {
     quotes: () => data,
+  },
+  Mutation: {
+    addQuote: (_, quote) => addQuote(quote),
   },
 };
 
