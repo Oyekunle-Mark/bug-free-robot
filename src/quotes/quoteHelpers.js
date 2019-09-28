@@ -1,5 +1,5 @@
 const { v4 } = require('uuid');
-let data = require('./store');
+let data = require('../data/store');
 
 const getQuotes = () => data;
 
